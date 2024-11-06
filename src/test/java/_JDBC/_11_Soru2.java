@@ -1,18 +1,30 @@
-package Utilities;
+package _JDBC;
 
-import java.sql.*;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DBUtility {
 
-    private static Connection connection;
-    public static Statement statement;
+public class _11_Soru2 extends JDBCParent {
+    public static void main(String[] args) {
+
+        String sorgu = "select * from customer";
+
+        List<List<String>> gelenData = getListData(sorgu);
+
+        for (List<String> satir : gelenData) {
+            for (String hucre : satir)
+                System.out.print(hucre + "\t");
+
+            System.out.println();
+        }
+
+    }
 
     public static List<List<String>> getListData(String sorgu) {
 
         DBConnectionOpen();
-
         List<List<String>> tablo = new ArrayList<>();
 
         try {
@@ -33,27 +45,6 @@ public class DBUtility {
         }
         DBConnectionClose();
         return tablo;
-    }
-
-    public static void DBConnectionOpen() {
-        String url = "jdbc:mysql://demo.mersys.io:33906/sakila";
-        String username = "admin";
-        String password = "Techno24Study.%=";
-
-        try {
-            connection = DriverManager.getConnection(url, username, password);
-            statement = connection.createStatement();
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
-    }
-
-    public static void DBConnectionClose() {
-        try {
-            connection.close();
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
     }
 
 
